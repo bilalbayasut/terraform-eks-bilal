@@ -14,7 +14,7 @@ resource "kubernetes_deployment" "example" {
   }
 
   spec {
-    replicas = 3
+    replicas = 1
 
     selector {
       match_labels = {
@@ -34,16 +34,16 @@ resource "kubernetes_deployment" "example" {
           image = "nginx:1.7.8"
           name  = "example"
 
-          resources {
-            limits {
-              cpu    = "0.5"
-              memory = "512Mi"
-            }
-            requests {
-              cpu    = "250m"
-              memory = "50Mi"
-            }
-          }
+          # resources {
+          #   limits {
+          #     cpu    = "0.5"
+          #     memory = "512Mi"
+          #   }
+          #   requests {
+          #     cpu    = "250m"
+          #     memory = "50Mi"
+          #   }
+          # }
 
           liveness_probe {
             http_get {
@@ -73,9 +73,9 @@ resource "kubernetes_service" "example" {
     selector = {
       name = kubernetes_deployment.example.metadata[0].name
     }
-    session_affinity = "ClientIP"
+    # session_affinity = "ClientIP"
     port {
-      port        = 8080
+      port        = 80
       target_port = 80
     }
 
