@@ -37,6 +37,10 @@ module "eks" {
       asg_desired_capacity          = 1
     },
   ]
+
+  map_roles    = var.map_roles
+  map_users    = var.map_users
+  map_accounts = var.map_accounts
 }
 
 data "aws_eks_cluster" "cluster" {
