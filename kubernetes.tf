@@ -71,7 +71,7 @@ resource "kubernetes_service" "example" {
   }
   spec {
     selector = {
-      name = kubernetes_deployment.example.metadata[0].name
+      test = "MyExampleApp"
     }
     # session_affinity = "ClientIP"
     port {
