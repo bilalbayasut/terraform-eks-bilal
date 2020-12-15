@@ -4,9 +4,17 @@
 #   default     = "my-cluster"
 # }
 
+## AWS
+variable "aws_region" {
+  description = "AWS region"
+  type        = string
+  default     = "us-east-1"
+}
+
+## VPC
 variable "name" {
   description = "Name to be used on all the resources as identifier"
-  type = string
+  type        = string
   default     = ""
 }
 
@@ -17,18 +25,18 @@ variable "cidr" {
 
 variable "azs" {
   description = "A list of availability zones in the region"
-  type        = list
+  type        = list(any)
   default     = []
 }
 
 variable "public_subnets" {
   description = "A list of public subnets inside the VPC"
-  type        = list
+  type        = list(any)
   default     = []
 }
 
 variable "private_subnets" {
   description = "A list of private subnets inside the VPC"
-  type        = list
+  type        = list(any)
   default     = []
 }
