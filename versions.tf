@@ -19,3 +19,6 @@ provider "null" {
   version = "~> 2.1.2"
 }
 
+provider "helm" {
+  version = "1.3.2"
+}
