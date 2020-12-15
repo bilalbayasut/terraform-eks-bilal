@@ -15,10 +15,9 @@ terraform {
       source  = "hashicorp/kubernetes"
       version = "1.13.3"
     }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "1.3.2"
+    }
   }
-}
-
-# Configure the AWS Provider
-provider "aws" {
-  region = var.aws_region
 }
