@@ -1,7 +1,7 @@
 variable "cluster_name" {
   description = "EKS cluster name"
   type        = string
-  default     = "my-cluster"
+  # default     = "my-cluster"
 }
 
 variable "vpc_id" {
@@ -10,7 +10,7 @@ variable "vpc_id" {
 }
 
 variable "subnets" {
-  description = "subnets"
+  description = "PVC subnets"
   type        = list(string)
 }
 
