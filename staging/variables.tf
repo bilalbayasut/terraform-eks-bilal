@@ -9,6 +9,20 @@ variable "aws_region" {
   type        = string
   default     = "us-east-1"
 }
+variable "developer_power_users" {
+  type    = list(string)
+  default = []
+}
+
+variable "administrators" {
+  type    = list(string)
+  default = []
+}
+
+variable "billings" {
+  type    = list(string)
+  default = []
+}
 
 ## VPC
 variable "name" {
