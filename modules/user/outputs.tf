@@ -22,6 +22,13 @@ output "new_developer_power_users_secret" {
   value = aws_iam_access_key.new_developer_power_users.*.encrypted_secret
 }
 
+
+data "aws_caller_identity" "current" {}
+
+output "account_id" {
+  value = data.aws_caller_identity.current.account_id
+}
+
 # # access key
 # output "new_developer_power_users_iam_smtp_password_v4" {
 #   # count = length(aws_iam_user.new_developer_power_users)
