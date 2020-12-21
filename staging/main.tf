@@ -1,6 +1,6 @@
 
-module "users" {
-  source                = "../modules/users"
+module "user" {
+  source                = "../modules/user"
   developer_power_users = var.developer_power_users
   administrators        = var.administrators
   billings              = var.billings

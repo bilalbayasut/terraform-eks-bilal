@@ -32,20 +32,6 @@ resource "aws_iam_group_policy" "billing" {
   policy = file("${path.module}/BillingAccess.json")
 }
 
-# # attach group policies to groups
-# resource "aws_iam_group_policy_attachment" "developer_power_user_group_policy" {
-#   group      = aws_iam_group.developer_power_user.name
-#   policy_arn = aws_iam_policy.developer_power_user.arn
-# }
-# resource "aws_iam_group_policy_attachment" "administrator_group_policy" {
-#   group      = aws_iam_group.administrator.name
-#   policy_arn = aws_iam_policy.administrator.arn
-# }
-# resource "aws_iam_group_policy_attachment" "billing_group_policy" {
-#   group      = aws_iam_group.billing.name
-#   policy_arn = aws_iam_policy.billing.arn
-# }
-
 # create users
 resource "aws_iam_user" "new_developer_power_users" {
   count = length(var.developer_power_users)
