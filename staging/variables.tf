@@ -3,6 +3,11 @@ variable "cluster_name" {
   type        = string
 }
 
+variable "create_eks" {
+  description = "conditional bool for eks creation"
+  type        = number
+}
+
 ## AWS
 variable "aws_region" {
   description = "AWS region"

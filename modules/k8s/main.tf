@@ -5,7 +5,7 @@ module "eks" {
   cluster_version                 = "1.18"
   subnets                         = var.subnets
   cluster_endpoint_private_access = true
-
+  # create_eks                      = var.create_eks
   vpc_id = var.vpc_id
 
   worker_groups = [
@@ -29,9 +29,6 @@ module "eks" {
   map_roles                            = var.map_roles
   map_users                            = var.map_users
   map_accounts                         = var.map_accounts
-
-
-
-  write_kubeconfig   = true
-  config_output_path = "./"
+  write_kubeconfig                     = true
+  config_output_path                   = "./"
 }

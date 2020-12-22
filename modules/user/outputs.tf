@@ -26,5 +26,6 @@ output "new_developer_power_users_password" {
 
 # secret key
 output "new_developer_power_users_secret" {
-  value = aws_iam_access_key.new_developer_power_users.*.encrypted_secret
+  value     = aws_iam_access_key.new_developer_power_users.*.encrypted_secret
+  sensitive = true
 }

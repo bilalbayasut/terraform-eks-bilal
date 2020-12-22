@@ -4,6 +4,11 @@ variable "cluster_name" {
   # default     = "my-cluster"
 }
 
+# variable "create_eks" {
+#   description = "conditional bool for eks creation"
+#   type        = number
+# }
+
 variable "vpc_id" {
   description = "ID of the VPC in which security resources are deployed"
   type        = string
