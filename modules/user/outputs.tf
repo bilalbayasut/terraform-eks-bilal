@@ -1,8 +1,10 @@
+output "new_developer_power_users" {
+  value = aws_iam_user.new_developer_power_users
+}
 data "aws_arn" "new_developer_power_users_account_ids" {
   count = length(aws_iam_user.new_developer_power_users)
   arn   = aws_iam_user.new_developer_power_users[count.index].arn
 }
-
 output "new_developer_power_users_arn" {
   value = aws_iam_user.new_developer_power_users.*.arn
 }

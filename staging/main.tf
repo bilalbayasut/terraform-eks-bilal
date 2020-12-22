@@ -1,3 +1,10 @@
+locals {
+  map_users = [for user in module.user.new_developer_power_users : {
+    userarn  = user.arn
+    username = user.name
+    groups   = ["system:masters"]
+  }]
+}
 
 module "user" {
   source                = "../modules/user"
@@ -21,8 +28,8 @@ module "user" {
 #   cluster_name = var.cluster_name
 #   subnets      = module.network.private_subnets
 #   vpc_id       = module.network.vpc_id
-#   map_roles    = []
-#   map_users    = var.map_users
+# # map_roles    = []
+#   map_users    = local.map_users
 #   map_accounts = module.user.new_developer_power_users_account_ids
 #   depends_on = [module.network]
 # }
