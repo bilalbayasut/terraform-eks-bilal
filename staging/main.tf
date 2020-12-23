@@ -1,9 +1,18 @@
+data "aws_caller_identity" "current" {}
 locals {
   map_users = [for user in module.user.new_developer_power_users : {
     userarn  = user.arn
     username = user.name
     groups   = ["system:masters"]
   }]
+
+  # to get your current aws auth in your local
+  # map_local_users = {
+  #   userarn  = data.aws_caller_identity.current.arn
+  #   username = data.aws_caller_identity.current.account_id
+  #   groups   = ["system:masters"]
+  # }
+
 }
 
 module "user" {

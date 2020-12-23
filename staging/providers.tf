@@ -3,6 +3,8 @@ provider "aws" {
   region = var.aws_region
 }
 
+# DEV: COMMENT WHEN YOU DONT WANT K8s TO BE DEPLOYED
+
 provider "helm" {
   # Configuration options
   kubernetes {
@@ -27,13 +29,3 @@ data "aws_eks_cluster" "cluster" {
 data "aws_eks_cluster_auth" "cluster" {
   name = module.k8s.cluster_id
 }
-
-# data "aws_eks_cluster" "cluster" {
-#   count = var.create_eks ? 1 : 0
-#   name  = module.k8s.cluster_id
-# }
-
-# data "aws_eks_cluster_auth" "cluster" {
-#   count = var.create_eks ? 1 : 0
-#   name  = module.k8s.cluster_id
-# }
