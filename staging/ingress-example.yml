@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: "terraform-example"
+  # namespace: "2048-game"
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+  labels:
+    app: terraform-example
+    test: MyExampleApp
+spec:
+  backend:
+    serviceName: "terraform-example"
+    servicePort: 80
+  rules:
+    - http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: "terraform-example"
+              servicePort: 80

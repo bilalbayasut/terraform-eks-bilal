@@ -5,8 +5,8 @@ This repo containing Terraform configuration files to provision an EKS cluster o
 
 # update kubeconfig
 
-put your cluster name and region
-aws eks update-kubeconfig --name getting-started-eks --region ap-southeast-2
+put your cluster name and region (optional: this will be done automatically by terraform)
+`aws eks update-kubeconfig --name getting-started-eks --region ap-southeast-2`
 
 # note
 
@@ -20,3 +20,12 @@ thus, this must be noted and deleted first manually (at least for now)
 - Then `terraform apply --var-files=staging.env --auto-approve`
 - Then we need to get the decrypted password `terraform output password | base64 --decode | keybase pgp decrypt`
 - login as iam user and change your password, you should be able to logged in
+
+# workarround for terraform destroy
+1. Use target mode to destroy only the EKS cluster: terraform destroy -target module.eks
+2. Subsequently, set the create_eks flag to false after the first step
+3. Run an apply to clean up the old cluster configuration. terraform apply
+
+or
+terraform state rm module.eks.kubernetes_config_map.aws_auth
+terraform destroy

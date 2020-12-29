@@ -1,4 +1,4 @@
-resource "kubernetes_deployment" "example" {
+resource "kubernetes_deployment" "terraform-example" {
   metadata {
     name = "terraform-example"
     labels = {
@@ -58,9 +58,10 @@ resource "kubernetes_deployment" "example" {
   }
 }
 
-resource "kubernetes_service" "example" {
+resource "kubernetes_service" "terraform-example" {
   metadata {
     name = "terraform-example"
+    # test = "MyExampleApp"
   }
   spec {
     selector = {
@@ -72,6 +73,68 @@ resource "kubernetes_service" "example" {
       target_port = 80
     }
 
-    type = "LoadBalancer"
+    type = "ClusterIP"
   }
 }
+
+
+# resource "kubernetes_ingress" "terraform-example" {
+#   wait_for_load_balancer = false
+#   metadata {
+#     name = "example-ingress"
+#   }
+
+#   spec {
+#     backend {
+#       service_name = "terraform-example"
+#       service_port = 80
+#     }
+
+#     rule {
+#       http {
+#         path {
+#           backend {
+#             service_name = "terraform-example"
+#             service_port = 80
+#           }
+
+#           path = "/"
+#         }
+#       }
+#     }
+#   }
+
+# }
+
+# resource "kubernetes_ingress" "terraform-example" {
+#   wait_for_load_balancer = false
+#   metadata {
+#     name = "example-ingress"
+#     annotations = {
+#       # "kubernetes.io/ingress.class" = "nginx"
+#       "alb.ingress.kubernetes.io/scheme" = "internet-facing"
+#       "kubernetes.io/ingress.class"      = "alb"
+#     }
+#   }
+
+#   spec {
+#     backend {
+#       service_name = "terraform-example"
+#       service_port = 80
+#     }
+
+#     rule {
+#       http {
+#         path {
+#           backend {
+#             service_name = "terraform-example"
+#             service_port = 80
+#           }
+
+#           path = "/"
+#         }
+#       }
+#     }
+#   }
+
+# }
