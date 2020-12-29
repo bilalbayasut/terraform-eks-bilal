@@ -2,7 +2,7 @@ module "eks" {
   source                          = "terraform-aws-modules/eks/aws"
   version                         = "13.2.1"
   cluster_name                    = var.cluster_name
-  cluster_version                 = "1.19.3"
+  cluster_version                 = "1.18"
   subnets                         = var.subnets
   cluster_endpoint_private_access = true
   # create_eks                      = var.create_eks

@@ -29,3 +29,16 @@ thus, this must be noted and deleted first manually (at least for now)
 or
 terraform state rm module.eks.kubernetes_config_map.aws_auth
 terraform destroy
+
+## Load balancer
+1. Create IAM OIDC provider
+2. Download IAM policy for the AWS Load Balancer Controller
+3. Create an IAM policy called AWSLoadBalancerControllerIAMPolicy
+4. Create a IAM role and ServiceAccount for the Load Balancer controller, use the ARN from the step above
+### Installing the chart
+1. Add the EKS repository to Helm: `helm repo add eks https://aws.github.io/eks-charts`
+2. Install the TargetGroupBinding CRDs: `kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=master"`
+3. Install the AWS Load Balancer controller, if using iamserviceaccount: 
+    ```
+    helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=<k8s-cluster-name> --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
+    ```
