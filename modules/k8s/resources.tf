@@ -78,7 +78,7 @@ resource "kubernetes_service" "terraform-example" {
 }
 
 resource "kubernetes_ingress" "terraform-example" {
-  depends_on             = [module.eks]
+  depends_on             = [module.eks, null_resource.helm_install_aws_load_balancer_controller]
   wait_for_load_balancer = false
   metadata {
     name = "terraform-example-ingress"

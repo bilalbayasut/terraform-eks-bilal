@@ -48,3 +48,6 @@ terraform destroy
 - set dns, route53, ingress hostname and cert via terraform
 - utilize terraform local-exec to basically run helm commands to install load-balancer, prometheus, etc
 - using terraform to spin up managed database and EFS for prometheus and grafana
+
+##NOTE
+before running `terraform destroy --var-file staging.env --auto-approve` you need to run `terraform refresh --var-file staging.env` this is to sync remote platform state with your local state because not all of terraform resoruces are saved into your local terraform state, for instance `local-exec` resource.
