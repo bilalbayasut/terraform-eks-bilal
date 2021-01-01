@@ -17,19 +17,19 @@ resource "aws_iam_group" "billing" {
 resource "aws_iam_group_policy" "developer_power_user" {
   name   = "developer_power_user"
   group  = aws_iam_group.developer_power_user.name
-  policy = file("${path.module}/PowerUserAccess.json")
+  policy = file("${path.module}/policies/PowerUserAccess.json")
 }
 
 resource "aws_iam_group_policy" "administrator" {
   name   = "administrator"
   group  = aws_iam_group.administrator.name
-  policy = file("${path.module}/AdministratorAccess.json")
+  policy = file("${path.module}/policies/AdministratorAccess.json")
 }
 
 resource "aws_iam_group_policy" "billing" {
   name   = "billing"
   group  = aws_iam_group.billing.name
-  policy = file("${path.module}/BillingAccess.json")
+  policy = file("${path.module}/policies/BillingAccess.json")
 }
 
 # create users

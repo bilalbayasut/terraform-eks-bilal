@@ -1,8 +1,9 @@
 resource "kubernetes_deployment" "terraform-example" {
+  depends_on = [module.eks]
   metadata {
     name = "terraform-example"
     labels = {
-      test = "MyExampleApp"
+      app = "terraform-example"
     }
   }
 
@@ -11,21 +12,21 @@ resource "kubernetes_deployment" "terraform-example" {
 
     selector {
       match_labels = {
-        test = "MyExampleApp"
+        app = "terraform-example"
       }
     }
 
     template {
       metadata {
         labels = {
-          test = "MyExampleApp"
+          app = "terraform-example"
         }
       }
 
       spec {
         container {
           image = "nginx:1.7.8"
-          name  = "example"
+          name  = "terraform-example"
 
           # resources {
           #   limits {
@@ -59,82 +60,53 @@ resource "kubernetes_deployment" "terraform-example" {
 }
 
 resource "kubernetes_service" "terraform-example" {
+  depends_on = [module.eks]
   metadata {
     name = "terraform-example"
-    # test = "MyExampleApp"
   }
   spec {
     selector = {
-      test = "MyExampleApp"
+      app = "terraform-example"
     }
-    # session_affinity = "ClientIP"
     port {
       port        = 80
       target_port = 80
     }
 
-    type = "ClusterIP"
+    type = "NodePort"
   }
 }
 
+resource "kubernetes_ingress" "terraform-example" {
+  depends_on             = [module.eks]
+  wait_for_load_balancer = false
+  metadata {
+    name = "terraform-example-ingress"
+    annotations = {
+      # "kubernetes.io/ingress.class" = "nginx"
+      "alb.ingress.kubernetes.io/scheme" = "internet-facing"
+      "kubernetes.io/ingress.class"      = "alb"
+    }
+  }
 
-# resource "kubernetes_ingress" "terraform-example" {
-#   wait_for_load_balancer = false
-#   metadata {
-#     name = "example-ingress"
-#   }
+  spec {
+    backend {
+      service_name = "terraform-example"
+      service_port = 80
+    }
 
-#   spec {
-#     backend {
-#       service_name = "terraform-example"
-#       service_port = 80
-#     }
+    rule {
+      http {
+        path {
+          backend {
+            service_name = "terraform-example"
+            service_port = 80
+          }
 
-#     rule {
-#       http {
-#         path {
-#           backend {
-#             service_name = "terraform-example"
-#             service_port = 80
-#           }
+          path = "/"
+        }
+      }
+    }
+  }
 
-#           path = "/"
-#         }
-#       }
-#     }
-#   }
-
-# }
-
-# resource "kubernetes_ingress" "terraform-example" {
-#   wait_for_load_balancer = false
-#   metadata {
-#     name = "example-ingress"
-#     annotations = {
-#       # "kubernetes.io/ingress.class" = "nginx"
-#       "alb.ingress.kubernetes.io/scheme" = "internet-facing"
-#       "kubernetes.io/ingress.class"      = "alb"
-#     }
-#   }
-
-#   spec {
-#     backend {
-#       service_name = "terraform-example"
-#       service_port = 80
-#     }
-
-#     rule {
-#       http {
-#         path {
-#           backend {
-#             service_name = "terraform-example"
-#             service_port = 80
-#           }
-
-#           path = "/"
-#         }
-#       }
-#     }
-#   }
-
-# }
+}

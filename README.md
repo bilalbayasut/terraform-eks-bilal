@@ -42,3 +42,9 @@ terraform destroy
     ```
     helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=<k8s-cluster-name> --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
     ```
+
+#TODO:
+- using makefile to install required tools locally
+- set dns, route53, ingress hostname and cert via terraform
+- utilize terraform local-exec to basically run helm commands to install load-balancer, prometheus, etc
+- using terraform to spin up managed database and EFS for prometheus and grafana

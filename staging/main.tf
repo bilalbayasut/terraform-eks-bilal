@@ -41,4 +41,5 @@ module "k8s" {
   map_users    = local.map_users
   map_accounts = module.user.new_developer_power_users_account_ids
   depends_on   = [module.network]
+  create_eks   = var.create_eks
 }
