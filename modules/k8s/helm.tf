@@ -23,10 +23,17 @@ module "irsa" {
   tags           = { "env" = "staging" }
   enabled        = false
 }
+
+# resource "null_resource" "helm_repo_update" {
+#   depends_on = [module.eks, null_resource.kubectl_update]
+#   provisioner "local-exec" {
+#     command = "helm repo update"
+#   }
+# }
 resource "null_resource" "helm_add_eks_repo_charts" {
   depends_on = [module.eks, null_resource.kubectl_update]
   provisioner "local-exec" {
-    command = "helm repo add eks https://aws.github.io/eks-charts"
+    command = "helm repo update && helm repo add eks https://aws.github.io/eks-charts"
   }
 }
 
@@ -40,10 +47,16 @@ resource "null_resource" "k8s_apply_aws_load_balancer_controller" {
 resource "null_resource" "helm_install_aws_load_balancer_controller" {
   depends_on = [module.eks, null_resource.k8s_apply_aws_load_balancer_controller]
   provisioner "local-exec" {
-    # command = "helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=$NAME --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller"
     command = "helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=$NAME"
     environment = {
       NAME = var.cluster_name
     }
+  }
+}
+
+resource "null_resource" "prometheus_install" {
+  depends_on = [module.eks, null_resource.k8s_apply_aws_load_balancer_controller]
+  provisioner "local-exec" {
+    command = "helm repo update && helm install prometheus prometheus-community/prometheus --namespace default --set alertmanager.persistentVolume.storageClass='gp2' --set server.persistentVolume.storageClass='gp2'"
   }
 }
