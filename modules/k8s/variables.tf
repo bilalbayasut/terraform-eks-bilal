@@ -14,6 +14,16 @@ variable "vpc_id" {
   type        = string
 }
 
+variable "grafana_user" {
+  description = "username for grafana dashboard"
+  type        = string
+}
+
+variable "grafana_password" {
+  description = "password for grafana password"
+  type        = string
+}
+
 variable "subnets" {
   description = "PVC subnets"
   type        = list(string)

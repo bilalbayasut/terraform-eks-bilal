@@ -38,8 +38,10 @@ module "k8s" {
   subnets      = module.network.private_subnets
   vpc_id       = module.network.vpc_id
   # map_roles    = []
-  map_users    = local.map_users
-  map_accounts = module.user.new_developer_power_users_account_ids
-  depends_on   = [module.network]
-  create_eks   = var.create_eks
+  map_users        = local.map_users
+  map_accounts     = module.user.new_developer_power_users_account_ids
+  depends_on       = [module.network]
+  create_eks       = var.create_eks
+  grafana_user     = var.grafana_user
+  grafana_password = var.grafana_password
 }

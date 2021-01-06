@@ -8,6 +8,17 @@ variable "create_eks" {
   type        = bool
 }
 
+
+variable "grafana_user" {
+  description = "username for grafana dashboard"
+  type        = string
+}
+
+variable "grafana_password" {
+  description = "password for grafana password"
+  type        = string
+}
+
 ## AWS
 variable "aws_region" {
   description = "AWS region"

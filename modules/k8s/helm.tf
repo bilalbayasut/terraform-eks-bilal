@@ -60,3 +60,14 @@ resource "null_resource" "prometheus_install" {
     command = "helm repo update && helm install prometheus prometheus-community/prometheus --namespace default --set alertmanager.persistentVolume.storageClass='gp2' --set server.persistentVolume.storageClass='gp2'"
   }
 }
+
+resource "null_resource" "grafana_install" {
+  depends_on = [module.eks, null_resource.k8s_apply_aws_load_balancer_controller, null_resource.prometheus_install]
+  provisioner "local-exec" {
+    command = "helm repo update && helm install grafana grafana/grafana --namespace default --set persistence.storageClassName='gp2' --set persistence.enabled=true --set adminUser=$GRAFANA_USER --set adminPassword=$GRAFANA_PASSWORD --values ${path.module}/ymls/grafana.yml --set service.type=LoadBalancer"
+    environment = {
+      GRAFANA_USER     = var.grafana_user
+      GRAFANA_PASSWORD = var.grafana_password
+    }
+  }
+}
