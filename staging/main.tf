@@ -45,3 +45,14 @@ module "k8s" {
   grafana_user     = var.grafana_user
   grafana_password = var.grafana_password
 }
+
+module "db" {
+  source                 = "../modules/db"
+  database_name          = var.database_name
+  database_user          = var.database_user
+  database_password      = var.database_password
+  database_port          = var.database_port
+  subnet_ids             = module.network.private_subnets
+  vpc_security_group_ids = [module.k8s.cluster_security_group_id]
+  depends_on             = [module.network, module.k8s]
+}

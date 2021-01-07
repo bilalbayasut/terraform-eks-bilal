@@ -8,7 +8,7 @@ variable "create_eks" {
   type        = bool
 }
 
-
+# grafana
 variable "grafana_user" {
   description = "username for grafana dashboard"
   type        = string
@@ -16,6 +16,25 @@ variable "grafana_user" {
 
 variable "grafana_password" {
   description = "password for grafana password"
+  type        = string
+}
+
+# DB
+variable "database_name" {
+  description = "database_name"
+  type        = string
+}
+
+variable "database_user" {
+  description = "database user"
+  type        = string
+}
+variable "database_password" {
+  description = "database_password"
+  type        = string
+}
+variable "database_port" {
+  description = "database_port"
   type        = string
 }
 
